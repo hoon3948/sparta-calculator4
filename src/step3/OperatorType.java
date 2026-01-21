@@ -1,5 +1,48 @@
 package step3;
 
 public enum OperatorType {
+    ADD('+'){
+        @Override
+        public double apply(double num1, double num2) {
+            return num1 + num2;
+        }
+    },
+    SUB('-'){
+        @Override
+        public double apply(double num1, double num2) {
+            return num1 - num2;
+        }
+    },
+    MUL('*'){
+        @Override
+        public double apply(double num1, double num2) {
+            return num1 * num2;
+        }
+    },
+    DIV('/'){
+        @Override
+        public double apply(double num1, double num2) {
+            if(num2 == 0){
+                throw new ArithmeticException("0으로 나눌수없다.");
+            }
+            return num1/num2;
+        }
+    };
 
+    private final char symbol;
+
+    OperatorType(char symbol){
+        this.symbol = symbol;
+    }
+
+    public abstract double apply(double num1, double num2);
+
+    public static OperatorType fromChar(char sign1){
+        for(OperatorType op : values()){
+            if(op.symbol == sign1){
+                return op;
+            }
+        }
+        throw new IllegalArgumentException("부호가 틀였습니다.");
+    }
 }
